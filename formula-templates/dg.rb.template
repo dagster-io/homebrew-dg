@@ -1,0 +1,31 @@
+class Dg < Formula
+  include Language::Python::Virtualenv
+  desc "The official command line utility for Dagster."
+  homepage "https://dagster.io/"
+  version "{{version}}"
+  license "Apache-2.0"
+
+  if OS.mac?
+    if Hardware::CPU.arm?
+      url "https://github.com/dagster-io/homebrew-tap/releases/download/v{{version}}/dg-macos-aarch64"
+      sha256 "{{dg_arm_sha}}"
+      def install
+        bin.install "dg-macos-aarch64" => "dg"
+      end
+    else
+      url "https://github.com/dagster-io/homebrew-tap/releases/download/v{{version}}/dg-macos-x64"
+      sha256 "{{dg_x64_sha}}"
+      def install
+        bin.install "dg-macos-x64" => "dg"
+      end
+    end
+  end
+
+  if OS.linux?
+    url "https://github.com/dagster-io/homebrew-tap/releases/download/v{{version}}/dg-linux-x86_64"
+    sha256 "{{dg_linux_sha}}"
+    def install
+      bin.install "dg-linux-x86_64" => "dg"
+    end
+  end
+end

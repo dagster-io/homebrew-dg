@@ -1,0 +1,14 @@
+# Builds generated/dg.pex and writes it to /generated
+
+# Use an official manylinux builder (https://github.com/pypa/manylinux#docker-images)
+FROM --platform=linux/amd64 quay.io/pypa/manylinux_2_28_x86_64:latest
+
+ENV PATH="/opt/python/cp312-cp312/bin:$PATH"
+
+RUN python3.12 -m pip install typer rich pex
+
+COPY build.py build.py
+
+RUN mkdir -p /generated
+
+CMD ["python3.12", "build.py", "build-dg-pex"]
